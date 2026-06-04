@@ -12,17 +12,17 @@
 }
 
 .home__name {
-  font-family: var(--font-serif);
+  font-family: 'Lato', system-ui, sans-serif;
   font-size: clamp(4rem, 11vw, 8.5rem);
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.05em;
   color: var(--color-ink);
   margin-bottom: 0.08em;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .home__name-last {
-  font-style: italic;
+  font-style: normal;
   color: var(--color-ink);
 }
 
