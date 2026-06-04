@@ -1,121 +1,105 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import Nav from './components/Nav'
+import Home from './pages/Home'
+import Portfolio from './pages/Portfolio'
+import Resume from './pages/Resume'
+import Agent from './pages/Agent'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const STORAGE_KEY = 'ak_auth'
+const PASSWORD_HASH = 'fe88609f5fd7bd82a0787581b3dfc61a420283ae9b97adc755bd2a91f4504341'
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str))
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')
+}
+
+function PasswordGate({ onAuth }) {
+  const [value, setValue] = useState('')
+  const [error, setError] = useState(false)
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    const hash = await sha256(value)
+    if (hash === PASSWORD_HASH) {
+      localStorage.setItem(STORAGE_KEY, '1')
+      onAuth()
+    } else {
+      setError(true)
+      setValue('')
+    }
+  }
+
+  function handleChange(e) {
+    setValue(e.target.value)
+    if (error) setError(false)
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
+    <div style={{
+      position: 'fixed', inset: 0,
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      background: '#fff', fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+    }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', width: '100%', maxWidth: '320px', padding: '0 1.5rem' }}>
+        <p style={{ fontSize: '0.9375rem', fontWeight: 600, color: '#1d1d1f', letterSpacing: '-0.01em', marginBottom: '0.25rem' }}>
+          AK
+        </p>
+        <input
+          type="password"
+          autoFocus
+          placeholder="Password"
+          value={value}
+          onChange={handleChange}
+          style={{
+            width: '100%', padding: '0.65rem 0.875rem',
+            fontSize: '0.9375rem', fontFamily: 'inherit',
+            background: '#f5f5f7', border: error ? '1px solid #ff3b30' : '1px solid transparent',
+            borderRadius: '10px', outline: 'none', color: '#1d1d1f',
+            transition: 'border-color 0.15s',
+          }}
+        />
+        {error && (
+          <p style={{ fontSize: '0.8125rem', color: '#ff3b30', margin: '-0.25rem 0 0', alignSelf: 'flex-start' }}>
+            Incorrect password
           </p>
-        </div>
+        )}
         <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+          type="submit"
+          style={{
+            width: '100%', padding: '0.65rem', fontSize: '0.9375rem',
+            fontFamily: 'inherit', fontWeight: 500, background: '#1d1d1f',
+            color: '#fff', border: 'none', borderRadius: '10px', cursor: 'pointer',
+            transition: 'opacity 0.15s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.opacity = '0.8'}
+          onMouseLeave={e => e.currentTarget.style.opacity = '1'}
         >
-          Count is {count}
+          Continue
         </button>
-      </section>
+      </form>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
+function App() {
+  const [authed, setAuthed] = useState(() => localStorage.getItem(STORAGE_KEY) === '1')
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+  if (!authed) return <PasswordGate onAuth={() => setAuthed(true)} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+  return (
+    <BrowserRouter>
+      <Nav />
+      <main className="page">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/resume" element={<Resume />} />
+          <Route path="/agent" element={<Agent />} />
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 
