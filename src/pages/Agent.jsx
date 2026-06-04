@@ -2,8 +2,6 @@ import { useState, useRef, useEffect } from 'react'
 import { Send } from 'lucide-react'
 import './Agent.css'
 
-const SYSTEM_PROMPT =
-  'You are a structural engineering assistant with access to a curated knowledge base built by Alexi Kouromenos, a licensed SE/PE. Answer questions about structural engineering, seismic design, BIM, and related topics concisely and technically.'
 
 const INIT_MESSAGE = {
   role: 'system',
@@ -44,20 +42,10 @@ export default function Agent() {
         .filter((m) => m.role !== 'system')
         .map((m) => ({ role: m.role, content: m.content }))
 
-      const res = await fetch('https://api.anthropic.com/v1/messages', {
+      const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + import.meta.env.VITE_ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-allow-browser': 'true',
-        },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1024,
-          system: SYSTEM_PROMPT,
-          messages: apiMessages,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: apiMessages }),
       })
 
       if (!res.ok) {
