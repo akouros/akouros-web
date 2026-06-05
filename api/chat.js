@@ -73,13 +73,6 @@ export default async function handler(req) {
   const vector = await embedQuery(query)
   const matches = await queryPinecone(vector)
 
-  // Debug: log Pinecone match summary to Vercel function logs
-  console.log('Pinecone matches:', JSON.stringify(matches.map(m => ({
-    id: m.id,
-    score: m.score,
-    hasContent: !!m.metadata?.content
-  })), null, 2))
-
   // 4 & 5. Build context string from matched metadata
   const context = buildContext(matches)
 
