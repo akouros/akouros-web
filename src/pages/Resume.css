@@ -7,18 +7,36 @@
   gap: 1.5rem;
 }
 
-.resume__eyebrow {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--color-muted);
-  margin-bottom: 1rem;
-}
-
 .resume__title {
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--color-ink);
+  margin-bottom: 0.4rem;
+}
+
+.resume__contact {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.resume__contact a {
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.resume__contact a:hover {
+  color: var(--color-ink);
+}
+
+.resume__contact-sep {
+  color: var(--color-border);
 }
 
 .resume__download {
@@ -74,7 +92,7 @@
   margin-bottom: 3rem;
 }
 
-.experience-item + .experience-item {
+.experience-item--ruled {
   border-top: 1px solid var(--color-border);
   padding-top: 3rem;
 }
@@ -98,6 +116,13 @@
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--color-ink);
+}
+
+.experience-item__location {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-subtle);
+  margin-left: 0.25rem;
 }
 
 .experience-item__dates {

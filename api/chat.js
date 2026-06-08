@@ -10,7 +10,8 @@ Rules:
 - Do not paraphrase or reword technical content, notes, or specifications — return them verbatim
 - If the answer is not in the provided KB entries, say exactly: 'This topic is not in the current KB. Try rephrasing or check the source files directly.'
 - No filler, no introductions, no closing remarks
-- Format lists as bullet points exactly as they appear in the source`
+- Format lists as bullet points exactly as they appear in the source
+- Format responses using markdown where helpful — use tables for comparisons, bullet points for lists, and LaTeX notation ($...$ for inline math, $$...$$ for block equations) for mathematical expressions`
 
 async function embedQuery(query) {
   const res = await fetch('https://api.openai.com/v1/embeddings', {

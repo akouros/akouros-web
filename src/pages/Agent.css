@@ -106,6 +106,117 @@
   margin-top: 0.5rem;
 }
 
+/* ── Markdown rendering inside assistant bubbles ── */
+
+.message--assistant .message__bubble p {
+  margin-bottom: 0.5rem;
+}
+
+.message--assistant .message__bubble p:last-child {
+  margin-bottom: 0;
+}
+
+/* Headings */
+.message--assistant .message__bubble h1,
+.message--assistant .message__bubble h2,
+.message--assistant .message__bubble h3,
+.message--assistant .message__bubble h4 {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  margin: 1rem 0 0.4rem;
+  color: var(--color-ink);
+}
+
+.message--assistant .message__bubble h1:first-child,
+.message--assistant .message__bubble h2:first-child,
+.message--assistant .message__bubble h3:first-child {
+  margin-top: 0;
+}
+
+/* Lists */
+.message--assistant .message__bubble ul,
+.message--assistant .message__bubble ol {
+  padding-left: 1.25rem;
+  margin: 0.4rem 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.message--assistant .message__bubble li {
+  line-height: 1.6;
+}
+
+/* Code — inline */
+.message--assistant .message__bubble code {
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: 0.875em;
+  background: #e8e8ed;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: var(--color-ink);
+}
+
+/* Code — block */
+.message--assistant .message__bubble pre {
+  background: #f5f5f7;
+  border-radius: 6px;
+  padding: 0.875rem 1rem;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+}
+
+.message--assistant .message__bubble pre code {
+  background: transparent;
+  padding: 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  border-radius: 0;
+}
+
+/* Tables */
+.message--assistant .message__bubble table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin: 0.75rem 0;
+}
+
+.message--assistant .message__bubble th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+  background: #e8e8ed;
+  color: var(--color-ink);
+}
+
+.message--assistant .message__bubble td {
+  padding: 0.45rem 0.75rem;
+  color: var(--color-ink);
+  vertical-align: top;
+}
+
+.message--assistant .message__bubble tr:nth-child(even) td {
+  background: #f5f5f7;
+}
+
+/* Block math (KaTeX display) */
+.message--assistant .message__bubble .katex-display {
+  margin: 1rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+/* Blockquotes */
+.message--assistant .message__bubble blockquote {
+  border-left: 3px solid var(--color-border);
+  margin: 0.5rem 0;
+  padding: 0.25rem 0 0.25rem 0.875rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
 /* Typing indicator */
 .typing-indicator {
   display: flex;

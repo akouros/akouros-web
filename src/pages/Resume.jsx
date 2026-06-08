@@ -24,7 +24,7 @@ const experience = [
     bullets: [
       'Calculations and construction documents across project types: city-owned summer camp, 142,500 sf K–8 school, prefabricated modular schools, affordable housing, Berkeley High School renovation, 1920s theater renovation — steel, concrete, timber, masonry.',
       'Managed multi-million dollar projects on time and on budget; created proposals, budgets, and work plans.',
-      'Administered construction phases including shop drawing review and international correspondence with fabricators.',
+      'Administered construction phases including shop drawing review and international correspondence with fabricators in China and Mexico.',
       'Conducted complex nonlinear FEA seismic risk assessments.',
       'Developed office calculation and Revit tools; led onboarding and training.',
     ],
@@ -55,22 +55,10 @@ const licenses = [
 ]
 
 const skills = [
-  {
-    cluster: 'Structural',
-    tags: ['ETABS', 'Perform3D', 'RISA', 'Karamba3D'],
-  },
-  {
-    cluster: 'BIM',
-    tags: ['Revit', 'Dynamo', 'AutoCAD', 'Rhino', 'Grasshopper'],
-  },
-  {
-    cluster: 'Development',
-    tags: ['C#', 'Visual Studio', 'Matlab'],
-  },
-  {
-    cluster: 'Visualization',
-    tags: ['Twinmotion', 'Adobe Suite', 'Bluebeam'],
-  },
+  { cluster: 'Structural', tags: ['ETABS', 'Perform3D', 'RISA', 'Karamba3D'] },
+  { cluster: 'BIM', tags: ['Revit', 'Dynamo', 'AutoCAD', 'Rhino', 'Grasshopper'] },
+  { cluster: 'Development', tags: ['C#', 'Visual Studio', 'Matlab'] },
+  { cluster: 'Visualization', tags: ['Twinmotion', 'Adobe Suite', 'Bluebeam'] },
 ]
 
 const publications = [
@@ -86,11 +74,15 @@ export default function Resume() {
       <div className="container">
         <div className="resume__header">
           <div>
-            <p className="resume__eyebrow">Curriculum Vitae</p>
-            <h1 className="resume__title">Resume</h1>
+            <h1 className="resume__title">Alexandros Kouromenos</h1>
+            <p className="resume__contact">
+              <a href="mailto:akouromenos@gmail.com">akouromenos@gmail.com</a>
+              <span className="resume__contact-sep">·</span>
+              <a href="tel:+15103236515">(510) 323-6515</a>
+            </p>
           </div>
-          <a href="/resume.pdf" download className="resume__download">
-            <Download size={14} /> Download PDF
+          <a href="/Akouromenos Resume.pdf" download className="resume__download">
+            <Download size={13} /> Download PDF
           </a>
         </div>
       </div>
@@ -103,14 +95,12 @@ export default function Resume() {
             <div className="resume__section-grid">
               <span className="resume__section-label">Experience</span>
               <div>
-                {experience.map((job) => (
-                  <div key={job.company} className="experience-item">
+                {experience.map((job, idx) => (
+                  <div key={job.company} className={`experience-item${idx > 0 ? ' experience-item--ruled' : ''}`}>
                     <div className="experience-item__header">
                       <span className="experience-item__company">
                         {job.company}
-                        <span style={{ fontWeight: 400, color: 'var(--color-subtle)', fontSize: '0.875rem', marginLeft: '0.5rem' }}>
-                          — {job.location}
-                        </span>
+                        <span className="experience-item__location"> — {job.location}</span>
                       </span>
                       <span className="experience-item__dates">{job.dates}</span>
                     </div>
