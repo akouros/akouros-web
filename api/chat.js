@@ -14,13 +14,14 @@ Rules:
 - Format responses using markdown where helpful — use tables for comparisons, bullet points for lists, and LaTeX notation ($...$ for inline math, $$...$$ for block equations) for mathematical expressions`
 
 async function embedQuery(query) {
+  const input = query.slice(0, 500)
   const res = await fetch('https://api.openai.com/v1/embeddings', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
     },
-    body: JSON.stringify({ model: 'text-embedding-3-small', input: query }),
+    body: JSON.stringify({ model: 'text-embedding-3-small', input }),
   })
   if (!res.ok) throw new Error(`OpenAI embed error ${res.status}`)
   const data = await res.json()
@@ -74,7 +75,7 @@ export default async function handler(req) {
   let system = SYSTEM_RULES
   try {
     const ragTimeout = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('RAG timeout')), 8000)
+      setTimeout(() => reject(new Error('RAG timeout')), 6000)
     )
     const rag = async () => {
       const vector = await embedQuery(query)
