@@ -1,5 +1,3 @@
-export const config = { runtime: 'edge' }
-
 const PINECONE_HOST = 'structural-kb-su0omeo.svc.aped-4627-b74a.pinecone.io'
 
 const SYSTEM_RULES = `You are a structural engineering KB retrieval assistant. Your only job is to find and return relevant content from the provided knowledge base entries.
@@ -54,24 +52,22 @@ function buildContext(matches) {
   return 'Relevant KB entries:\n\n---\n\n' + entries.join('\n\n---\n\n')
 }
 
-export default async function handler(req) {
+module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type')
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      }
-    })
+    return res.status(200).end()
   }
 
-  const { messages } = await req.json()
+  const { messages } = req.body
 
   // 1. Extract the last user message as the query
   const lastUser = [...messages].reverse().find(m => m.role === 'user')
   const query = lastUser?.content ?? ''
 
-  // 2–5. Embed + retrieve with an 8 s timeout; fall back gracefully if slow
+  // 2–5. Embed + retrieve with a 6 s timeout; fall back gracefully if slow
   let system = SYSTEM_RULES
   try {
     const ragTimeout = new Promise((_, reject) =>
@@ -88,7 +84,7 @@ export default async function handler(req) {
     console.warn('RAG pipeline skipped:', err.message)
   }
 
-  // 7. Call Claude with the enriched system prompt
+  // 6. Call Claude with the enriched system prompt
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
@@ -105,12 +101,5 @@ export default async function handler(req) {
   })
 
   const data = await response.json()
-
-  return new Response(JSON.stringify(data), {
-    status: response.status,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    }
-  })
+  return res.status(response.status).json(data)
 }
