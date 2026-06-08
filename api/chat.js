@@ -36,7 +36,7 @@ async function queryPinecone(vector) {
     },
     body: JSON.stringify({
       vector,
-      topK: 5,
+      topK: 8,
       includeMetadata: true,
     }),
   })
@@ -70,17 +70,22 @@ export default async function handler(req) {
   const lastUser = [...messages].reverse().find(m => m.role === 'user')
   const query = lastUser?.content ?? ''
 
-  // 2 & 3. Embed the query and retrieve top-5 KB matches from Pinecone
-  const vector = await embedQuery(query)
-  const matches = await queryPinecone(vector)
-
-  // 4 & 5. Build context string from matched metadata
-  const context = buildContext(matches)
-
-  // 6. Prepend KB context to the system prompt
-  const system = context
-    ? `${context}\n\n---\n\n${SYSTEM_RULES}`
-    : SYSTEM_RULES
+  // 2–5. Embed + retrieve with an 8 s timeout; fall back gracefully if slow
+  let system = SYSTEM_RULES
+  try {
+    const ragTimeout = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('RAG timeout')), 8000)
+    )
+    const rag = async () => {
+      const vector = await embedQuery(query)
+      const matches = await queryPinecone(vector)
+      return buildContext(matches)
+    }
+    const context = await Promise.race([rag(), ragTimeout])
+    if (context) system = `${context}\n\n---\n\n${SYSTEM_RULES}`
+  } catch (err) {
+    console.warn('RAG pipeline skipped:', err.message)
+  }
 
   // 7. Call Claude with the enriched system prompt
   const response = await fetch('https://api.anthropic.com/v1/messages', {
