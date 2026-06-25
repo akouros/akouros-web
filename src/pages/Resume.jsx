@@ -5,14 +5,15 @@ const experience = [
   {
     company: 'H2M Architects + Engineers',
     location: 'NYC',
-    role: 'Senior Structural Engineer',
+    role: 'Senior Structural Engineer & BIM Innovation Lead',
     dates: 'April 2024 – Present',
     bullets: [
+      'Standardized firm-wide Revit templates, curated a custom family library, and developed the standard structural detail library.',
+      'Founded and lead the BIM Innovations Group — developing Revit automation plugins in C# and AI-assisted engineering tools designed to reduce friction between design intent and production deliverables.',
       'Lead multiple major projects including school additions and wastewater facilities, overseeing staff and coordinating with multidisciplinary teams.',
       'Structural analysis and design for diverse building systems, specializing in steel and concrete for mid to high-rise structures.',
       'Manage restorations and new constructions, ensuring seamless integration with architectural and MEP designs.',
       'Conduct site inspections, review shop drawings, and handle RFIs across project phases.',
-      "Spearheaded development of the team's Revit infrastructure: standardizing libraries, optimizing templates, and creating custom plugins.",
       'Mentor junior engineers and collaborate with PMs to monitor budgets and track change orders.',
     ],
   },
