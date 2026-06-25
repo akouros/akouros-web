@@ -171,7 +171,10 @@ export default function Resume() {
               <div>
                 {publications.map((p, i) => (
                   <div key={i} className="publication-item">
-                    <p className="publication-item__title">{p.title}</p>
+                    <p className="publication-item__title">
+                      {p.title}
+                      <a href="/WCTE_2018_FullPaper_AKouromenos.pdf" download className="pub-download">↓ Download PDF</a>
+                    </p>
                     <p className="publication-item__detail">{p.detail}</p>
                   </div>
                 ))}

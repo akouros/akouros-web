@@ -236,6 +236,18 @@
   font-weight: 400;
 }
 
+.pub-download {
+  font-size: 0.75rem;
+  color: #0071e3;
+  margin-left: 0.75rem;
+  text-decoration: none;
+  font-style: normal;
+}
+
+.pub-download:hover {
+  text-decoration: underline;
+}
+
 /* Skills */
 .skills-grid {
   display: grid;
