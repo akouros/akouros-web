@@ -15,6 +15,16 @@ const projects = [
   },
   {
     index: '02',
+    title: 'Castilleja School',
+    type: 'Structural Engineering',
+    year: '2020',
+    description:
+      'A 142,500 SF K-8 school utilizing a hybrid system of mass timber decks on steel framing. Composite concrete topping was used to achieve large deck spans. Special concrete shear walls with a 1st floor non-linear hinge mechanism resists seismic forces.',
+    tags: ['Mass Timber', 'Steel', 'School', 'Seismic'],
+    images: ['/images/Castilleja-01.jpg', '/images/Castilleja-02.jpg', '/images/Castilleja-03.jpg'],
+  },
+  {
+    index: '04',
     title: 'Aquabred — NuWave USA',
     type: 'Concept Design',
     year: '2017–2021',
@@ -28,7 +38,7 @@ const projects = [
     ],
   },
   {
-    index: '03',
+    index: '05',
     title: 'Custom Residential Truss — Ware Associates',
     type: 'Structural Engineering',
     year: '2017',
@@ -38,7 +48,7 @@ const projects = [
     images: ['/images/Truss.png'],
   },
   {
-    index: '04',
+    index: '06',
     title: 'Shadow Cliffs Park Entrance — Ware Associates',
     type: 'Structural Engineering',
     year: '2018',
@@ -48,7 +58,7 @@ const projects = [
     images: ['/images/shadow-cliffs.jpg'],
   },
   {
-    index: '05',
+    index: '07',
     title: 'Redwood Visitor Center — Mar Structural Design',
     type: 'Structural Engineering',
     year: '2020',
